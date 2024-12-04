@@ -34,17 +34,18 @@ LL5 = coco_bd_col(bd3, {'L'});
 
 %r = 0.235563107416025;
 %r = 0.235563107415577;
-r = 1
-L_start = 0.8;
-DL = 0.5;
+r = 0.01
+L_start = 1.4;
+DL = 0.155;
 
 par_nonaut = [L_start;DL;r];
 
 e5_w_start = interp1([LL5(15:24), LL5(26:35)],[e5(1,15:24),e5(1,26:35)],L_start);
 e5_b_start = interp1([LL5(15:24), LL5(26:35)],[e5(2,15:24),e5(2,26:35)],L_start);
 
-initcond = [0.137556 0.5484426];
-tspan = [-100 100];
+% initcond = [0.137556 0.5484426];
+initcond = [0.69036 0];
+tspan = [-1000 1000];
 
 odefun = @(t,var)DaisyW_nonaut(t,var,par_nonaut);
 [t,var] = ode45(odefun,tspan,initcond,opts);
@@ -54,7 +55,7 @@ Lt = L_start + (DL./2).*(tanh(r.*t) + 1);
 
 figure(3);
 % hold on 
-plot(t,a_b)
+plot(Lt,a_w)
 % xlim([-100 100])
 box on 
 %%
